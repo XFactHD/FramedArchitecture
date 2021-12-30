@@ -1,0 +1,37 @@
+modLoader="javafml"
+loaderVersion="[39,)"
+license="LGPG v3"
+issueTrackerURL="https://github.com/xfacthd/framedarchitecture"
+
+[[mods]]
+	modId="framedarchitecture"
+	version="${file.jarVersion}"
+	displayName="FramedArchitecture"
+	#updateJSONURL="https://change.me.example.invalid/updates.json"
+	#displayURL="https://change.me.to.your.mods.homepage.example.invalid/"
+	logoFile="logo.png"
+	#credits="Thanks for this example mod goes to Java"
+	authors="XFactHD"
+	description='''
+	'''
+
+[[dependencies.framedarchitecture]]
+    modId="forge"
+    mandatory=true
+    versionRange="[39,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.framedarchitecture]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.1,1.19)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.framedarchitecture]]
+    modId="framedblocks"
+    mandatory=true
+    versionRange="[4.0.2,)"
+    ordering="AFTER"
+    side="BOTH"

@@ -1,0 +1,13 @@
+{
+  "block.framedarchitecture.framed_bordered_grate": "Framed Bordered Grate",
+  "block.framedarchitecture.framed_fluted_pillar": "Framed Fluted Pillar",
+  "block.framedarchitecture.framed_fluted_pillar_socket": "Framed Fluted Pillar Socket",
+  "block.framedarchitecture.framed_grate": "Framed Grate",
+  "block.framedarchitecture.framed_large_fluted_pillar": "Framed Large Fluted Pillar",
+  "block.framedarchitecture.framed_pillar": "Framed Pillar",
+  "block.framedarchitecture.framed_pillar_socket": "Framed Pillar Socket",
+  "block.framedarchitecture.framed_small_fluted_pillar": "Framed Small Fluted Pillar",
+  "block.framedarchitecture.framed_small_fluted_pillar_socket": "Framed Small Fluted Pillar Socket",
+  "block.framedarchitecture.framed_small_pillar_socket": "Framed Small Pillar Socket",
+  "itemGroup.framed_architecture": "FramedArchitecture"
+}
