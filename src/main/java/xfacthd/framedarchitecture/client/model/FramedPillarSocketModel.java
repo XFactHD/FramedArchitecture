@@ -48,63 +48,27 @@ public class FramedPillarSocketModel extends FramedBlockModel
 
     public static void createSocketTopBottom(Map<Direction, List<BakedQuad>> quadMap, BakedQuad quad, int width)
     {
-        float offset = ((16F - width) / 2F) / 2F;
+        float offset = (((16F - width) / 2F) / 2F) / 16F;
 
         //Lower ring
-        BakedQuad copy = ModelUtils.duplicateQuad(quad);
-        if (BakedQuadTransformer.createTopBottomQuad(copy, Direction.EAST, offset / 16F))
-        {
-            BakedQuadTransformer.setQuadPosInFacingDir(copy, 4F/16F);
-            quadMap.get(null).add(copy);
-        }
-
-        copy = ModelUtils.duplicateQuad(quad);
-        if (BakedQuadTransformer.createTopBottomQuad(copy, Direction.WEST, offset / 16F))
-        {
-            BakedQuadTransformer.setQuadPosInFacingDir(copy, 4F/16F);
-            quadMap.get(null).add(copy);
-        }
-
-        copy = ModelUtils.duplicateQuad(quad);
-        if (BakedQuadTransformer.createTopBottomQuad(copy, offset / 16F, 0, 1F - (offset / 16F), offset / 16F))
-        {
-            BakedQuadTransformer.setQuadPosInFacingDir(copy, 4F/16F);
-            quadMap.get(null).add(copy);
-        }
-
-        copy = ModelUtils.duplicateQuad(quad);
-        if (BakedQuadTransformer.createTopBottomQuad(copy, offset / 16F, 1F - (offset / 16F), 1F - (offset / 16F), 1))
-        {
-            BakedQuadTransformer.setQuadPosInFacingDir(copy, 4F/16F);
-            quadMap.get(null).add(copy);
-        }
+        createOffsetTopBottomQuad(quadMap, quad, 0, 0, offset, 1, 4F/16F);
+        createOffsetTopBottomQuad(quadMap, quad, 1F - offset, 0, 1, 1, 4F/16F);
+        createOffsetTopBottomQuad(quadMap, quad, offset, 0, 1F - offset, offset, 4F/16F);
+        createOffsetTopBottomQuad(quadMap, quad, offset, 1F - offset, 1F - offset, 1, 4F/16F);
 
         //Upper ring
-        copy = ModelUtils.duplicateQuad(quad);
-        if (BakedQuadTransformer.createTopBottomQuad(copy, offset / 16F, offset / 16F, (offset * 2) / 16F, 1F - (offset / 16F)))
-        {
-            BakedQuadTransformer.setQuadPosInFacingDir(copy, .5F);
-            quadMap.get(null).add(copy);
-        }
+        createOffsetTopBottomQuad(quadMap, quad, offset, offset, offset * 2F, 1F - offset, .5F);
+        createOffsetTopBottomQuad(quadMap, quad, 1F - (offset * 2), offset, 1F - offset, 1F - offset, .5F);
+        createOffsetTopBottomQuad(quadMap, quad, offset * 2, offset, 1F - (offset * 2F), offset * 2, .5F);
+        createOffsetTopBottomQuad(quadMap, quad, offset * 2, 1F - (offset * 2), 1F - (offset * 2F), 1F - offset, .5F);
+    }
 
-        copy = ModelUtils.duplicateQuad(quad);
-        if (BakedQuadTransformer.createTopBottomQuad(copy, 1F - ((offset * 2) / 16F), offset / 16F, 1F - (offset / 16F), 1F - (offset / 16F)))
+    private static void createOffsetTopBottomQuad(Map<Direction, List<BakedQuad>> quadMap, BakedQuad quad, float minX, float minZ, float maxX, float maxZ, float offset)
+    {
+        BakedQuad copy = ModelUtils.duplicateQuad(quad);
+        if (BakedQuadTransformer.createTopBottomQuad(copy, minX, minZ, maxX, maxZ))
         {
-            BakedQuadTransformer.setQuadPosInFacingDir(copy, .5F);
-            quadMap.get(null).add(copy);
-        }
-
-        copy = ModelUtils.duplicateQuad(quad);
-        if (BakedQuadTransformer.createTopBottomQuad(copy, (offset * 2) / 16F, offset / 16F, 1F - ((offset * 2) / 16F), (offset * 2) / 16F))
-        {
-            BakedQuadTransformer.setQuadPosInFacingDir(copy, .5F);
-            quadMap.get(null).add(copy);
-        }
-
-        copy = ModelUtils.duplicateQuad(quad);
-        if (BakedQuadTransformer.createTopBottomQuad(copy, (offset * 2) / 16F, 1F - ((offset * 2) / 16F), 1F - ((offset * 2) / 16F), 1F - (offset / 16F)))
-        {
-            BakedQuadTransformer.setQuadPosInFacingDir(copy, .5F);
+            BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
             quadMap.get(null).add(copy);
         }
     }

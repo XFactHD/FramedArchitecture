@@ -55,69 +55,16 @@ public class FramedGrateModel extends FramedBlockModel
                     float maxX = minX + PIXEL;
                     float maxZ = minZ + PIXEL;
 
-                    BakedQuad copy = ModelUtils.duplicateQuad(quad);
-                    if (quadAxis == Direction.Axis.Y && BakedQuadTransformer.createTopBottomQuad(copy, minX, minZ, maxX, maxZ))
-                    {
-                        BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
-                        dest.add(copy);
-                    }
-                    else if (quadAxis != Direction.Axis.Y && BakedQuadTransformer.createSideQuad(copy, minX, minZ, maxX, maxZ))
-                    {
-                        BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
-                        dest.add(copy);
-                    }
+                    createTopBottomOrSideQuad(quad, minX, minZ, maxX, maxZ, offset, dest);
                 }
             }
 
             if (bordered)
             {
-                BakedQuad copy = ModelUtils.duplicateQuad(quad);
-                if (quadAxis == Direction.Axis.Y && BakedQuadTransformer.createTopBottomQuad(copy, 0, 0, PIXEL, 1))
-                {
-                    BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
-                    dest.add(copy);
-                }
-                else if (quadAxis != Direction.Axis.Y && BakedQuadTransformer.createSideQuad(copy, 0, 0, PIXEL, 1))
-                {
-                    BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
-                    dest.add(copy);
-                }
-
-                copy = ModelUtils.duplicateQuad(quad);
-                if (quadAxis == Direction.Axis.Y && BakedQuadTransformer.createTopBottomQuad(copy, 1F - PIXEL, 0, 1, 1))
-                {
-                    BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
-                    dest.add(copy);
-                }
-                else if (quadAxis != Direction.Axis.Y && BakedQuadTransformer.createSideQuad(copy, 1F - PIXEL, 0, 1, 1))
-                {
-                    BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
-                    dest.add(copy);
-                }
-
-                copy = ModelUtils.duplicateQuad(quad);
-                if (quadAxis == Direction.Axis.Y && BakedQuadTransformer.createTopBottomQuad(copy, PIXEL, 0, 1F - PIXEL, PIXEL))
-                {
-                    BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
-                    dest.add(copy);
-                }
-                else if (quadAxis != Direction.Axis.Y && BakedQuadTransformer.createSideQuad(copy, PIXEL, 0, 1F - PIXEL, PIXEL))
-                {
-                    BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
-                    dest.add(copy);
-                }
-
-                copy = ModelUtils.duplicateQuad(quad);
-                if (quadAxis == Direction.Axis.Y && BakedQuadTransformer.createTopBottomQuad(copy, PIXEL, 1F - PIXEL, 1F - PIXEL, 1))
-                {
-                    BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
-                    dest.add(copy);
-                }
-                else if (quadAxis != Direction.Axis.Y && BakedQuadTransformer.createSideQuad(copy, PIXEL, 1F - PIXEL, 1F - PIXEL, 1))
-                {
-                    BakedQuadTransformer.setQuadPosInFacingDir(copy, offset);
-                    dest.add(copy);
-                }
+                createTopBottomOrSideQuad(quad, 0, 0, PIXEL, 1, offset, dest);
+                createTopBottomOrSideQuad(quad, 1F - PIXEL, 0, 1, 1, offset, dest);
+                createTopBottomOrSideQuad(quad, PIXEL, 0, 1F - PIXEL, PIXEL, offset, dest);
+                createTopBottomOrSideQuad(quad, PIXEL, 1F - PIXEL, 1F - PIXEL, 1, offset, dest);
             }
         }
         else
@@ -224,6 +171,22 @@ public class FramedGrateModel extends FramedBlockModel
         boolean positiveFace = quad.getDirection().getAxisDirection() == Direction.AxisDirection.POSITIVE;
 
         return (positivePos == positiveFace) ? 1F : (2F/16F);
+    }
+
+    private static void createTopBottomOrSideQuad(BakedQuad quad, float minX, float minZ, float maxX, float maxZ, float pos, List<BakedQuad> dest)
+    {
+        Direction.Axis quadAxis = quad.getDirection().getAxis();
+        BakedQuad copy = ModelUtils.duplicateQuad(quad);
+        if (quadAxis == Direction.Axis.Y && BakedQuadTransformer.createTopBottomQuad(copy, minX, minZ, maxX, maxZ))
+        {
+            BakedQuadTransformer.setQuadPosInFacingDir(copy, pos);
+            dest.add(copy);
+        }
+        else if (quadAxis != Direction.Axis.Y && BakedQuadTransformer.createSideQuad(copy, minX, minZ, maxX, maxZ))
+        {
+            BakedQuadTransformer.setQuadPosInFacingDir(copy, pos);
+            dest.add(copy);
+        }
     }
 
 

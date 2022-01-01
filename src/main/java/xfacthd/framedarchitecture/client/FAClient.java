@@ -4,7 +4,9 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -13,6 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 import xfacthd.framedarchitecture.FramedArchitecture;
 import xfacthd.framedarchitecture.client.model.*;
 import xfacthd.framedarchitecture.common.FAContent;
+import xfacthd.framedblocks.api.FramedBlocksClientAPI;
 import xfacthd.framedblocks.api.block.IFramedBlock;
 import xfacthd.framedblocks.api.util.client.ClientUtils;
 
@@ -34,6 +37,19 @@ public class FAClient
                                 type == RenderType.cutoutMipped() ||
                                 type == RenderType.translucent()
                 ));
+    }
+
+    @SubscribeEvent
+    public static void onBlockColors(final ColorHandlerEvent.Block event)
+    {
+        //noinspection SuspiciousToArrayCall
+        Block[] blocks = FAContent.getRegisteredBlocks()
+                .stream()
+                .map(RegistryObject::get)
+                .filter(block -> block instanceof IFramedBlock)
+                .toArray(Block[]::new);
+
+        event.getBlockColors().register(FramedBlocksClientAPI.getInstance().defaultBlockColor(), blocks);
     }
 
     @SubscribeEvent

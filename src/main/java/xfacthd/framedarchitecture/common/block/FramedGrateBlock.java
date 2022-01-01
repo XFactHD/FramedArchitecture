@@ -11,10 +11,28 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import xfacthd.framedarchitecture.common.data.*;
+import xfacthd.framedblocks.api.util.SideSkipPredicate;
 import xfacthd.framedblocks.api.util.Utils;
 
 public class FramedGrateBlock extends FramedBlock
 {
+    public static final SideSkipPredicate SKIP_PREDICATE = (level, pos, state, adjState, side) ->
+    {
+        if (adjState.getBlock() == state.getBlock())
+        {
+            Direction.Axis axis = state.getValue(BlockStateProperties.AXIS);
+            Direction.Axis adjAxis = adjState.getValue(BlockStateProperties.AXIS);
+            GratePosition gratePos = state.getValue(PropertyHolder.GRATE_POSITION);
+            GratePosition adjGratePos = adjState.getValue(PropertyHolder.GRATE_POSITION);
+
+            if (side.getAxis() != axis && adjAxis == axis && adjGratePos == gratePos)
+            {
+                return SideSkipPredicate.compareState(level, pos, side);
+            }
+        }
+        return false;
+    };
+
     public FramedGrateBlock(BlockType type) { super(type); }
 
     @Override

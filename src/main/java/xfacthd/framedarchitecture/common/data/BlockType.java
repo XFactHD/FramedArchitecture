@@ -25,7 +25,7 @@ public enum BlockType implements IBlockType
     FRAMED_FLUTED_PILLAR_SOCKET         (false, false,  true,  true, Predicates.SOCKET_CTM_PREDICATE, Predicates.socketSkipPredicate(() -> FAContent.blockFramedFlutedPillar), VoxelShapes.socketShapeGen(false)),
     FRAMED_LARGE_FLUTED_PILLAR          (false, false,  true,  true, CtmPredicate.FALSE, Predicates.pillarSkipPredicate(() -> () -> null), Shapes.block()),
     FRAMED_GRATE                        (false, false,  true,  true, CtmPredicate.FALSE, SideSkipPredicate.FALSE, FramedGrateBlock::generateShapes),
-    FRAMED_BORDERED_GRATE               (false, false,  true,  true, CtmPredicate.FALSE, SideSkipPredicate.FALSE, FramedGrateBlock::generateShapes);
+    FRAMED_BORDERED_GRATE               (false, false,  true,  true, CtmPredicate.FALSE, FramedGrateBlock.SKIP_PREDICATE, FramedGrateBlock::generateShapes);
 
     private final String name = toString().toLowerCase(Locale.ROOT);
     private final boolean specialHitbox;
